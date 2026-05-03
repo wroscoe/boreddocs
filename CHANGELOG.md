@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.2] - 2026-05-03
+
+### Added
+- Per-page **"View source"** and **"Edit this page on GitHub"** links in the
+  default theme footer. Each meeting and policy page links directly to its
+  source `.md` on GitHub (`<edit_base_url>/<source_path>` for the editable
+  view, with `/edit/` swapped to `/blob/` for the read-only view).
+- `source_path` is now exposed in the template context for theme authors.
+- Listing pages and the home page (which have no single source file) fall
+  back to a "View source repo" link to `site.repo_url`.
+
 ## [0.1.1] - 2026-05-03
 
 ### Fixed

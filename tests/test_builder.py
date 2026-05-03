@@ -107,6 +107,47 @@ def test_empty_base_url_keeps_root_relative_paths(tmp_path):
     assert 'href="/meetings/"' in home
 
 
+def test_meeting_pages_link_to_source_and_edit_on_github(tmp_path):
+    work = tmp_path / "sample-district"
+    shutil.copytree(SAMPLE, work)
+    cfg = load_config(work / "boreddocs.yml")
+    Builder(cfg).build()
+
+    minutes = (work / "_site" / "meetings" / "2025-08-13-regular-minutes" / "index.html").read_text()
+    assert (
+        "https://github.com/example/sample-school-district/blob/main/content/meetings/2025-08-13-regular-minutes.md"
+        in minutes
+    )
+    assert (
+        "https://github.com/example/sample-school-district/edit/main/content/meetings/2025-08-13-regular-minutes.md"
+        in minutes
+    )
+    assert "Edit this page on GitHub" in minutes
+
+
+def test_policy_pages_link_to_source(tmp_path):
+    work = tmp_path / "sample-district"
+    shutil.copytree(SAMPLE, work)
+    cfg = load_config(work / "boreddocs.yml")
+    Builder(cfg).build()
+
+    policy = (work / "_site" / "policies" / "AA" / "index.html").read_text()
+    assert "/blob/main/content/policies/AA.md" in policy
+    assert "/edit/main/content/policies/AA.md" in policy
+
+
+def test_listing_pages_show_repo_link_only(tmp_path):
+    """Listings have no source markdown file; they should fall back to the repo link."""
+    work = tmp_path / "sample-district"
+    shutil.copytree(SAMPLE, work)
+    cfg = load_config(work / "boreddocs.yml")
+    Builder(cfg).build()
+
+    listing = (work / "_site" / "meetings" / "index.html").read_text()
+    assert "View source repo" in listing
+    assert "Edit this page on GitHub" not in listing
+
+
 def test_overrides_static_overlays_theme_static(tmp_path):
     work = tmp_path / "sample-district"
     shutil.copytree(SAMPLE, work)

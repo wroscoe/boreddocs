@@ -5,8 +5,16 @@
     <p><strong>Vision Statement:</strong> "{{ site.footer.vision_statement | trim }}"</p>
     <p><strong>We Value:</strong> {{ site.footer.we_value | join(" * ") }}</p>
     <p class="footer-meta">
-      <a href="{{ site.repo_url }}">View source</a> ·
-      <a href="{{ site.repo_url }}/blob/main/CONTRIBUTING.md">Editor guide</a>
+      {% if source_path and site.edit_base_url %}
+        {% set view_url = site.edit_base_url | replace('/edit/', '/blob/') %}
+        <a href="{{ view_url }}/{{ source_path }}">View source</a> ·
+        <a href="{{ site.edit_base_url }}/{{ source_path }}">Edit this page on GitHub</a> ·
+      {% elif site.repo_url %}
+        <a href="{{ site.repo_url }}">View source repo</a> ·
+      {% endif %}
+      {% if site.repo_url %}
+        <a href="{{ site.repo_url }}/blob/main/CONTRIBUTING.md">Editor guide</a>
+      {% endif %}
     </p>
   </div>
 </footer>

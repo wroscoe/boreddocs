@@ -53,7 +53,12 @@ class Builder:
         out.mkdir(parents=True)
 
         site_ctx = self._site_context()
-        base_ctx = {"site": site_ctx, "data": data, "boreddocs_version": __version__}
+        base_ctx = {
+            "site": site_ctx,
+            "data": data,
+            "boreddocs_version": __version__,
+            "source_path": None,
+        }
 
         # Home
         (out / "index.html").write_text(env.get_template("home.html").render(**base_ctx))
@@ -63,7 +68,8 @@ class Builder:
         for m in meetings:
             d = out / "meetings" / m["slug"]
             d.mkdir(parents=True, exist_ok=True)
-            (d / "index.html").write_text(meeting_tpl.render(meeting=m, **base_ctx))
+            ctx = {**base_ctx, "source_path": m.get("source_path")}
+            (d / "index.html").write_text(meeting_tpl.render(meeting=m, **ctx))
 
         listing_tpl = env.get_template("meetings_listing.html")
         (out / "meetings").mkdir(exist_ok=True)
@@ -76,7 +82,8 @@ class Builder:
         for p in policies:
             d = out / "policies" / str(p["code"])
             d.mkdir(parents=True, exist_ok=True)
-            (d / "index.html").write_text(policy_tpl.render(policy=p, **base_ctx))
+            ctx = {**base_ctx, "source_path": p.get("source_path")}
+            (d / "index.html").write_text(policy_tpl.render(policy=p, **ctx))
 
         pol_listing_tpl = env.get_template("policies_listing.html")
         categories = data.get("policy_categories", {}).get("categories", [])
@@ -165,6 +172,7 @@ class Builder:
             self._render_sections(sections)
             meta["slug"] = slug_from_path(path)
             meta["sections"] = sections
+            meta["source_path"] = path.relative_to(self.config.project_dir).as_posix()
             meetings.append(meta)
         meetings.sort(key=lambda m: str(m.get("date", "")), reverse=True)
         return meetings
@@ -186,6 +194,7 @@ class Builder:
             md = self._md()
             meta["body_html"] = md.convert(body.strip())
             meta["slug"] = slug_from_path(path)
+            meta["source_path"] = path.relative_to(self.config.project_dir).as_posix()
             policies.append(meta)
         policies.sort(key=lambda p: str(p.get("code", "")))
         return policies
