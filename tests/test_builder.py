@@ -73,6 +73,40 @@ def test_overrides_directory_shadows_theme(tmp_path):
     assert "site-header" not in home  # the default theme's class is gone
 
 
+def test_base_url_prefixes_static_and_internal_links(tmp_path):
+    """When site.base_url is set, /static/... and internal links must be prefixed."""
+    work = tmp_path / "sample-district"
+    shutil.copytree(SAMPLE, work)
+
+    config_path = work / "boreddocs.yml"
+    config_path.write_text(
+        config_path.read_text().replace('base_url: ""', 'base_url: /my-repo')
+    )
+
+    cfg = load_config(config_path)
+    Builder(cfg).build()
+
+    home = (work / "_site" / "index.html").read_text()
+    assert 'href="/my-repo/static/styles.css"' in home
+    assert 'src="/my-repo/static/app.js"' in home
+    assert 'href="/my-repo/meetings/"' in home
+    assert 'href="/my-repo/policies/"' in home
+
+    listing = (work / "_site" / "meetings" / "index.html").read_text()
+    assert 'href="/my-repo/meetings/2025-09-10-regular/"' in listing
+
+
+def test_empty_base_url_keeps_root_relative_paths(tmp_path):
+    work = tmp_path / "sample-district"
+    shutil.copytree(SAMPLE, work)
+    cfg = load_config(work / "boreddocs.yml")
+    Builder(cfg).build()
+
+    home = (work / "_site" / "index.html").read_text()
+    assert 'href="/static/styles.css"' in home
+    assert 'href="/meetings/"' in home
+
+
 def test_overrides_static_overlays_theme_static(tmp_path):
     work = tmp_path / "sample-district"
     shutil.copytree(SAMPLE, work)

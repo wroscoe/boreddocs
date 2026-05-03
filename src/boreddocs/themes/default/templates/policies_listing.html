@@ -32,7 +32,7 @@
       {% for p in policies %}
       <tr>
         <td>{{ p.code }}</td>
-        <td><a href="/policies/{{ p.code }}/">{{ p.title }}</a></td>
+        <td><a href="{{ url('/policies/' ~ p.code ~ '/') }}">{{ p.title }}</a></td>
         <td>{{ p.type | default("P") }}</td>
         <td>{{ p.last_revised | default("") | string }}</td>
         <td>{{ p.last_reviewed | default("") | string }}</td>

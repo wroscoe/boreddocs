@@ -6,8 +6,8 @@
   <h1>{{ site.name }} — Board Documents</h1>
   <p>{{ site.description }}</p>
   <ul class="cta-list">
-    <li><a href="/meetings/">Browse meetings, agendas, and minutes →</a></li>
-    <li><a href="/policies/">Browse the Board Policy Manual →</a></li>
+    <li><a href="{{ url('/meetings/') }}">Browse meetings, agendas, and minutes →</a></li>
+    <li><a href="{{ url('/policies/') }}">Browse the Board Policy Manual →</a></li>
   </ul>
 </section>
 {% endblock %}

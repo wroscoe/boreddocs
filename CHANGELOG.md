@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.1] - 2026-05-03
+
+### Fixed
+- **Subpath deployments now work** (e.g. GitHub Pages project sites at
+  `https://<user>.github.io/<repo>/`). The default theme's templates now
+  prefix every internal link and static asset with `site.base_url`. Set
+  `site.base_url: /<repo>` in `boreddocs.yml` when deploying to a subpath.
+  Empty `base_url` (the default) preserves the previous root-relative
+  behavior. Templates expose a `url()` Jinja global for theme authors.
+
 ## [0.1.0] - 2026-05-03
 
 ### Added

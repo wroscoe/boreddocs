@@ -1,12 +1,12 @@
 <header class="site-header">
-  <a class="logo" href="/">
-    <img src="/static/img/logo.svg" alt="" width="48" height="48">
+  <a class="logo" href="{{ url('/') }}">
+    <img src="{{ url('/static/img/logo.svg') }}" alt="" width="48" height="48">
     <span class="logo-text">{{ site.name }}</span>
   </a>
   <nav class="primary-nav" aria-label="Primary">
     <ul>
       {% for link in site.nav %}
-      <li><a href="{{ link.url }}">{{ link.text }}</a></li>
+      <li><a href="{{ url(link.url) }}">{{ link.text }}</a></li>
       {% endfor %}
     </ul>
   </nav>

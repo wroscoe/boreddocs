@@ -20,7 +20,7 @@
     {% for m in meetings %}
     <tr>
       <td>{{ m.date | string }}</td>
-      <td><a href="/meetings/{{ m.slug }}/">{{ m.title }}{% if m.subtitle %} ({{ m.subtitle }}){% endif %}</a></td>
+      <td><a href="{{ url('/meetings/' ~ m.slug ~ '/') }}">{{ m.title }}{% if m.subtitle %} ({{ m.subtitle }}){% endif %}</a></td>
       <td>{{ m.type | default("agenda") | capitalize }}</td>
     </tr>
     {% endfor %}

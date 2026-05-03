@@ -120,12 +120,31 @@ class Builder:
             raise FileNotFoundError(f"Theme '{self.config.theme_name}' not found at {theme_tpl}")
         loaders.append(FileSystemLoader(str(theme_tpl)))
 
-        return Environment(
+        env = Environment(
             loader=ChoiceLoader(loaders),
             autoescape=select_autoescape(["html"]),
             trim_blocks=True,
             lstrip_blocks=True,
         )
+        env.globals["url"] = self._url_for
+        return env
+
+    def _url_for(self, path: str | None) -> str:
+        """Prefix an absolute site path with `site.base_url`.
+
+        Used by templates so a site deployed under a subpath (e.g. GitHub
+        Pages project sites at `/<repo>/`) resolves static assets and
+        internal links correctly. External URLs and relative paths pass
+        through unchanged.
+        """
+        if not path:
+            return ""
+        if "://" in path or path.startswith("//") or path.startswith("mailto:"):
+            return path
+        if not path.startswith("/"):
+            return path
+        base = str(self.config.site.get("base_url") or "").rstrip("/")
+        return base + path
 
     def _load_data(self) -> dict[str, Any]:
         data: dict[str, Any] = {}
