@@ -1,0 +1,16 @@
+# Build output
+_site/
+dist/
+build/
+*.egg-info/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+
+# OS
+.DS_Store

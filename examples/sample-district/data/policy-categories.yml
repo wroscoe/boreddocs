@@ -1,0 +1,13 @@
+categories:
+  - { code: A, name: Foundations and Basic Commitments }
+  - { code: B, name: School Board Governance and Operations }
+  - { code: C, name: General School Administration }
+  - { code: D, name: Fiscal Management }
+  - { code: E, name: Support Services }
+  - { code: F, name: Facilities Development }
+  - { code: G, name: Personnel }
+  - { code: H, name: Negotiations }
+  - { code: I, name: Instruction }
+  - { code: J, name: Students }
+  - { code: K, name: School-Community-Home Relations }
+  - { code: L, name: Education Agency Relations }

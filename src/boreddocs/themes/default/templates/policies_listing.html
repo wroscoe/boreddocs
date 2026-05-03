@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Board Policy Manual — {{ site.short_name }}{% endblock %}
+
+{% block breadcrumbs %}
+{% set crumbs = [{"text": "Policies Listing"}] %}
+{% include "partials/breadcrumbs.html" %}
+{% endblock %}
+
+{% block content %}
+<h1>Board Policy Manual</h1>
+<div class="policies-grid">
+  <aside class="policy-categories">
+    <h2>Categories</h2>
+    <ul>
+      <li><a href="#all">All</a></li>
+      {% for c in categories %}
+      <li><a href="#cat-{{ c.code }}">{{ c.code }}. {{ c.name }}</a></li>
+      {% endfor %}
+    </ul>
+  </aside>
+  <table class="listing policies-table" id="all">
+    <thead>
+      <tr>
+        <th>Code</th>
+        <th>Title</th>
+        <th>Type</th>
+        <th>Last Revised</th>
+        <th>Last Reviewed</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for p in policies %}
+      <tr>
+        <td>{{ p.code }}</td>
+        <td><a href="/policies/{{ p.code }}/">{{ p.title }}</a></td>
+        <td>{{ p.type | default("P") }}</td>
+        <td>{{ p.last_revised | default("") | string }}</td>
+        <td>{{ p.last_reviewed | default("") | string }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

@@ -1,0 +1,89 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "boreddocs"
+version = "0.1.0"
+description = "Free, SEO- and AI-friendly static site for school board documents — agendas, minutes, and policies authored in Markdown."
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.10"
+authors = [
+    { name = "Will Roscoe", email = "wroscoe@gmail.com" },
+]
+keywords = ["school", "board", "agendas", "minutes", "policies", "static-site", "markdown"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Environment :: Console",
+    "Intended Audience :: Education",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Documentation",
+    "Topic :: Internet :: WWW/HTTP :: Site Management",
+]
+dependencies = [
+    "markdown>=3.6,<4",
+    "jinja2>=3.1,<4",
+    "pyyaml>=6,<7",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8",
+    "ruff>=0.5",
+    "build>=1",
+]
+serve = [
+    "watchdog>=4",
+]
+
+[project.urls]
+Homepage = "https://github.com/wroscoe/boreddocs"
+Issues = "https://github.com/wroscoe/boreddocs/issues"
+Changelog = "https://github.com/wroscoe/boreddocs/blob/main/CHANGELOG.md"
+
+[project.scripts]
+boreddocs = "boreddocs.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/boreddocs"]
+
+[tool.hatch.build.targets.wheel.force-include]
+"examples/sample-district" = "boreddocs/_scaffold/sample-district"
+
+# Make sure non-Python files inside the package are shipped with the wheel.
+[tool.hatch.build.targets.wheel.shared-data]
+
+[tool.hatch.build]
+include = [
+    "src/boreddocs/**/*.py",
+    "src/boreddocs/themes/**",
+]
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "src/",
+    "examples/",
+    "tests/",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md",
+    "pyproject.toml",
+]
+
+[tool.ruff]
+target-version = "py310"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP"]
+ignore = ["E501"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"

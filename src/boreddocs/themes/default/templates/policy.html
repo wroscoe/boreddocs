@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}Policy {{ policy.code }}: {{ policy.title }}{% endblock %}
+{% block description %}TCSD Policy {{ policy.code }} — {{ policy.title }}.{% endblock %}
+
+{% block breadcrumbs %}
+{% set crumbs = [
+  {"text": "Policies Listing", "url": "/policies/"},
+  {"text": "Policy " ~ policy.code }
+] %}
+{% include "partials/breadcrumbs.html" %}
+{% endblock %}
+
+{% block content %}
+<article class="policy">
+  <h1>Policy {{ policy.code }}: {{ policy.title }}</h1>
+  <p class="policy-meta">
+    {% if policy.adopted %}<strong>Original Adopted Date:</strong> {{ policy.adopted | string }} | {% endif %}
+    {% if policy.last_revised %}<strong>Last Revised Date:</strong> {{ policy.last_revised | string }} | {% endif %}
+    {% if policy.last_reviewed %}<strong>Last Reviewed Date:</strong> {{ policy.last_reviewed | string }} | {% endif %}
+    {% if policy.status %}<strong>Status:</strong> {{ policy.status }}{% endif %}
+  </p>
+
+  <div class="policy-body">
+    {{ policy.body_html | safe }}
+  </div>
+
+  {% if policy.legal_references %}
+  <section class="policy-section">
+    <h2>Legal References</h2>
+    <ul>
+      {% for ref in policy.legal_references %}
+      <li>{% if ref.url %}<a href="{{ ref.url }}">{{ ref.text }}</a>{% else %}{{ ref.text }}{% endif %}</li>
+      {% endfor %}
+    </ul>
+  </section>
+  {% endif %}
+
+  {% if policy.related %}
+  <section class="policy-section">
+    <h2>Description</h2>
+    <ul>
+      {% for ref in policy.related %}
+      <li>{% if ref.url %}<a href="{{ ref.url }}">{{ ref.text }}</a>{% else %}{{ ref.text }}{% endif %}</li>
+      {% endfor %}
+    </ul>
+  </section>
+  {% endif %}
+</article>
+{% endblock %}

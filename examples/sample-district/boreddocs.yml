@@ -1,0 +1,45 @@
+schema_version: 1
+
+site:
+  name: Sample School District
+  short_name: SSD
+  base_url: ""
+  description: "Board agendas, minutes, and policies for Sample School District."
+  repo_url: https://github.com/example/sample-school-district
+  edit_base_url: https://github.com/example/sample-school-district/edit/main
+
+nav:
+  - { text: About Us, url: "/" }
+  - { text: Meetings, url: "/meetings/" }
+  - { text: Policies, url: "/policies/" }
+  - { text: Communications, url: "/" }
+  - { text: Documents, url: "/" }
+
+footer:
+  strategic_plan_goals:
+    - Success for All
+    - Safe, Healthy, and Caring Environment
+    - Effective and Efficient Operations
+    - Positively Engaged and Informed Community
+  mission_statement: >
+    Our mission is to ensure that every student has the foundation for success
+    and is challenged to reach their full potential.
+  vision_statement: >
+    Our vision is to ensure every student is prepared to succeed in an
+    ever-changing world.
+  we_value:
+    - Students
+    - Trust, Kindness, and Respect
+    - Challenging Standards
+    - Fairness and Equity
+    - Resilience and Perseverance
+
+theme:
+  name: default
+
+content:
+  meetings_dir: content/meetings
+  policies_dir: content/policies
+  data_dir: data
+
+output_dir: _site

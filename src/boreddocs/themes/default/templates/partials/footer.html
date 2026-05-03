@@ -1,0 +1,12 @@
+<footer class="site-footer">
+  <div class="container">
+    <p><strong>Strategic Plan Goals:</strong> {{ site.footer.strategic_plan_goals | join(" * ") }}</p>
+    <p><strong>Mission Statement:</strong> "{{ site.footer.mission_statement | trim }}"</p>
+    <p><strong>Vision Statement:</strong> "{{ site.footer.vision_statement | trim }}"</p>
+    <p><strong>We Value:</strong> {{ site.footer.we_value | join(" * ") }}</p>
+    <p class="footer-meta">
+      <a href="{{ site.repo_url }}">View source</a> ·
+      <a href="{{ site.repo_url }}/blob/main/CONTRIBUTING.md">Editor guide</a>
+    </p>
+  </div>
+</footer>

@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block title %}{{ meeting.title }} — {{ meeting.date | string }}{% endblock %}
+{% block description %}{{ meeting.title }} on {{ meeting.date | string }} at {{ meeting.location }}.{% endblock %}
+
+{% block breadcrumbs %}
+{% set crumbs = [
+  {"text": "Meetings Listing", "url": "/meetings/"},
+  {"text": meeting.title},
+  {"text": (meeting.date | string) }
+] %}
+{% include "partials/breadcrumbs.html" %}
+{% endblock %}
+
+{% block content %}
+<article class="meeting">
+  <header class="meeting-header">
+    <div class="meeting-header-left">
+      <img src="/static/img/logo.svg" alt="" width="64" height="64">
+    </div>
+    <div class="meeting-header-right">
+      <h1>{{ meeting.title }}{% if meeting.subtitle %} <span class="subtitle">({{ meeting.subtitle }})</span>{% endif %}</h1>
+      <p class="meeting-when">{{ meeting.date | string }}</p>
+      <p class="meeting-where">{{ meeting.location }}<br>{{ meeting.address }}</p>
+    </div>
+  </header>
+
+  {% if meeting.livestream or meeting.webex %}
+  <section class="meeting-attend">
+    {% if meeting.livestream %}
+    <p>To watch the livestream of tonight's board meeting, join via our YouTube link: <a href="{{ meeting.livestream }}">{{ meeting.livestream }}</a></p>
+    {% endif %}
+    {% if meeting.webex %}
+    <p><a href="{{ meeting.webex }}">Click here</a> to attend the meeting with the option to provide public comment virtually via Webex. You will be asked to register with your name and a valid email address.</p>
+    {% endif %}
+  </section>
+  {% endif %}
+
+  {% if meeting.attendance %}
+  <section class="attendance">
+    <h2>Attendance</h2>
+    {% if meeting.attendance.voting %}
+    <h3>Voting Members</h3>
+    <ul class="attendance-list">
+      {% for m in meeting.attendance.voting %}
+      <li>{{ m.name }}{% if m.role %}, {{ m.role }}{% endif %}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+    {% if meeting.attendance.non_voting %}
+    <h3>Non-Voting Members</h3>
+    <ul class="attendance-list">
+      {% for m in meeting.attendance.non_voting %}
+      <li>{{ m.name }}{% if m.role %}, {{ m.role }}{% endif %}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+  </section>
+  {% endif %}
+
+  {% include "partials/agenda_outline.html" %}
+
+  {% if meeting.supporting_links %}
+  <section class="supporting-links">
+    <h2>Supporting Links</h2>
+    <ul>
+      {% for link in meeting.supporting_links %}
+      <li><a href="{{ link.url }}">{{ link.text }}</a></li>
+      {% endfor %}
+    </ul>
+  </section>
+  {% endif %}
+
+  {% if meeting.attachments_drive %}
+  <section class="attachments">
+    <p><a href="{{ meeting.attachments_drive }}">📎 View attachments on Google Drive</a></p>
+  </section>
+  {% endif %}
+</article>
+{% endblock %}

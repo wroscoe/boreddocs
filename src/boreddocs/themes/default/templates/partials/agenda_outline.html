@@ -1,0 +1,26 @@
+<div class="agenda-outline">
+  <h2 class="agenda-banner">{% if meeting.type == "minutes" %}MEETING MINUTES{% else %}AGENDA{% endif %}</h2>
+  {% for s in meeting.sections %}
+  <details class="section section-numbered" open>
+    <summary>
+      <span class="chevron" aria-hidden="true">▾</span>
+      <span class="section-number">{{ s.number }}.</span>
+      <span class="section-title">{{ s.title }}</span>
+    </summary>
+    {% for item in s.items %}
+    <details class="item item-lettered" open>
+      <summary>
+        <span class="chevron" aria-hidden="true">▾</span>
+        <span class="item-letter">{{ item.letter }}.</span>
+        <span class="item-title">{{ item.title }}</span>
+      </summary>
+      {% if item.body_html %}
+      <div class="item-body">
+        {{ item.body_html | safe }}
+      </div>
+      {% endif %}
+    </details>
+    {% endfor %}
+  </details>
+  {% endfor %}
+</div>
