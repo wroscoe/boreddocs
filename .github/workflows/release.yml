@@ -25,28 +25,7 @@ jobs:
           name: dist
           path: dist/
 
-  publish-testpypi:
-    # Pre-release tags (e.g. v0.1.0rc1, v0.1.0-rc1) go to TestPyPI.
-    if: contains(github.ref_name, '-') || contains(github.ref_name, 'rc') || contains(github.ref_name, 'a') || contains(github.ref_name, 'b')
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: testpypi
-      url: https://test.pypi.org/p/boreddocs
-    permissions:
-      id-token: write
-    steps:
-      - uses: actions/download-artifact@v4
-        with:
-          name: dist
-          path: dist/
-      - uses: pypa/gh-action-pypi-publish@release/v1
-        with:
-          repository-url: https://test.pypi.org/legacy/
-
   publish-pypi:
-    # Final tags (e.g. v0.1.0, v1.2.3) go to PyPI.
-    if: ${{ !(contains(github.ref_name, '-') || contains(github.ref_name, 'rc') || contains(github.ref_name, 'a') || contains(github.ref_name, 'b')) }}
     needs: build
     runs-on: ubuntu-latest
     environment:
