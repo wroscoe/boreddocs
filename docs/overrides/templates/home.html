@@ -1,58 +1,91 @@
 {% extends "base.html" %}
-{% block title %}Bored Docs — open static-site renderer for school board documents{% endblock %}
-{% block description %}Free, SEO- and AI-friendly static site generator for school board agendas, minutes, and policies. Markdown in, GitHub Pages out.{% endblock %}
+{% block title %}Modern Board Docs — free, open board document software for school districts{% endblock %}
+{% block description %}Free, easy-to-update website for school board agendas, minutes, and policies. SEO-friendly, mobile-friendly, AI-friendly. Set up in 5 minutes.{% endblock %}
 
 {% block content %}
 <section class="hero">
   <h1>Modern Board Docs</h1>
   <p class="lede">Born out of the frustration of how unusable most board document software was, we made a better one you can use for free. Capture all your agendas, minutes, and policies in a format that's easy to understand and update. All pages are optimized for search engines and AI.</p>
   <p class="cta-row">
-    <a class="btn" href="{{ site.repo_url }}">View on GitHub</a>
+    <a class="btn btn-primary" href="https://github.com/wroscoe/boreddocs-starter/generate">Get started — create your site</a>
+    <a class="btn btn-secondary" href="#demo">See a live example</a>
   </p>
+  <p class="hero-meta">No software to install. Free forever. Hosted on GitHub.</p>
 </section>
 
-<section id="what">
-  <h2>What is this?</h2>
-  <p>School board agendas, minutes, and policies are public records — but most districts publish them through paid portals that are expensive, hostile to search engines, and unfriendly to AI assistants. <strong>Bored Docs</strong> is the free, open-source replacement: each district authors its content in Markdown in a GitHub repository, and <code>boreddocs build</code> renders a fully pre-rendered static site that can be hosted on GitHub Pages for $0.</p>
-  <p>Editor mental model: a district's repo is just Markdown + one config file. No Python, no templates, no frameworks. <code>pip install boreddocs</code> takes care of the rest.</p>
+<section id="demo">
+  <h2>See it in action</h2>
+  <p>Teton County School District #1 publishes its real board documents using this software. Browse a few real pages:</p>
+  <div class="demo-grid">
+    <a class="demo-card" href="https://wroscoe.github.io/tcsd_board_doc_viewer/meetings/2026-04-15-regular/" target="_blank" rel="noopener">
+      <h3>Meeting agenda</h3>
+      <p>Numbered sections, lettered sub-items, collapsible outline.</p>
+      <span class="demo-link">View example →</span>
+    </a>
+    <a class="demo-card" href="https://wroscoe.github.io/tcsd_board_doc_viewer/meetings/2026-02-11-regular-minutes/" target="_blank" rel="noopener">
+      <h3>Meeting minutes</h3>
+      <p>Full attendance list, motions, and per-member voting records.</p>
+      <span class="demo-link">View example →</span>
+    </a>
+    <a class="demo-card" href="https://wroscoe.github.io/tcsd_board_doc_viewer/policies/AA/" target="_blank" rel="noopener">
+      <h3>Board policy</h3>
+      <p>Full text, adoption history, and related references.</p>
+      <span class="demo-link">View example →</span>
+    </a>
+  </div>
 </section>
 
-<section id="quickstart">
-  <h2>Quickstart</h2>
-  <pre><code>pip install boreddocs
-boreddocs new my-district
-cd my-district
-boreddocs serve              # preview at http://localhost:8000
-boreddocs build              # → _site/, ready for GitHub Pages</code></pre>
-  <p>The bundled <code>boreddocs new</code> scaffold ships a working "Sample School District" with a real agenda, real minutes (motion blocks and all), and sample policies — clone, deploy, then replace the content.</p>
+<section id="features">
+  <h2>Why districts switch</h2>
+  <div class="feature-grid">
+    <div class="feature">
+      <h3>Free forever</h3>
+      <p>No subscription fees, no per-user charges. Hosted free on GitHub.</p>
+    </div>
+    <div class="feature">
+      <h3>Easy to update</h3>
+      <p>Edit a meeting's agenda right in your web browser — no software, no FTP. Click "Edit", type, click "Commit". The site updates within a minute.</p>
+    </div>
+    <div class="feature">
+      <h3>Found by search engines and AI</h3>
+      <p>Every page is indexed by Google, Bing, and AI assistants. Your community can actually find what they're looking for.</p>
+    </div>
+    <div class="feature">
+      <h3>Looks great on every device</h3>
+      <p>Phone, tablet, desktop — readable, responsive, and clean. Designed for the people who use it most: parents.</p>
+    </div>
+    <div class="feature">
+      <h3>You own your data</h3>
+      <p>Your agendas live in your own GitHub repository. Export, archive, or move them whenever you want — no vendor lock-in.</p>
+    </div>
+    <div class="feature">
+      <h3>Open source</h3>
+      <p>Source code is public, MIT-licensed, and audited by anyone who cares to look. No black boxes.</p>
+    </div>
+  </div>
 </section>
 
-<section id="how-it-works">
+<section id="how">
   <h2>How it works</h2>
-  <ul>
-    <li><strong>Markdown content</strong>: <code>content/meetings/2026-04-15-regular.md</code>, <code>content/policies/AA.md</code>. Frontmatter (YAML) for metadata, body for content.</li>
-    <li><strong>Heading conventions</strong>: <code># 1. Section</code> → numbered section (orange bar), <code>## A. Item</code> → lettered sub-item (blue bar), matching the typical board-portal outline.</li>
-    <li><strong>The <code>::motion</code> directive</strong>: a single Markdown block produces a fully styled voting record (motion text, mover, seconder, per-member yes/no). See an example on the <a href="https://wroscoe.github.io/tcsd_board_doc_viewer/meetings/2026-02-11-regular-minutes/">TCSD #1 minutes page</a>.</li>
-    <li><strong>Pre-rendered HTML</strong>: every page is plain HTML at deploy time — no client-side rendering, so search engines and AI scrapers index everything.</li>
-    <li><strong>Theme overrides</strong>: drop a file in <code>overrides/templates/</code> or <code>overrides/static/</code> and it shadows the default theme. (This very page is built that way.)</li>
-    <li><strong>Two clicks to edit</strong>: every page has a "View source" + "Edit this page on GitHub" link in the footer pointing at the source <code>.md</code>.</li>
-  </ul>
+  <ol class="steps">
+    <li>
+      <strong>Click "Get started"</strong> — a copy of the starter site is created in your GitHub account. (You'll need a free GitHub account.)
+    </li>
+    <li>
+      <strong>Add your district's name and first agenda</strong> — edit a few text files right in GitHub's web UI. The starter README walks you through it.
+    </li>
+    <li>
+      <strong>Save your changes</strong> — your site is live within a minute. Add a custom domain when you're ready.
+    </li>
+  </ol>
 </section>
 
-<section id="example">
-  <h2>Live example</h2>
-  <p><a href="https://wroscoe.github.io/tcsd_board_doc_viewer/">Teton County School District #1</a> — TCSD's full board-doc site, including agendas, minutes with motion blocks, and the Board Policy Manual. Their entire repository is <a href="https://github.com/wroscoe/tcsd_board_doc_viewer">~14 files</a>: a config, the Markdown content, and a 30-line GitHub Actions workflow. Everything else lives in the <code>boreddocs</code> package.</p>
-</section>
-
-<section id="status">
-  <h2>Status</h2>
-  <p>Pre-1.0. The frontmatter contract (<code>schema_version: 1</code>) is stable for the duration of <code>0.x</code>. Breaking changes require a major bump and a documented migration. <a href="{{ site.repo_url }}/blob/main/CHANGELOG.md">See the changelog</a>.</p>
-</section>
-
-<section id="install">
-  <h2>Install</h2>
-  <p><a href="{{ site.pypi_url }}">PyPI</a>:</p>
-  <pre><code>pip install boreddocs</code></pre>
-  <p>Source: <a href="{{ site.repo_url }}">github.com/wroscoe/boreddocs</a>. Issues and PRs welcome.</p>
+<section id="get-started" class="cta-section">
+  <h2>Ready to start?</h2>
+  <p>The whole setup takes about five minutes. You can change everything later.</p>
+  <p class="cta-row">
+    <a class="btn btn-primary btn-lg" href="https://github.com/wroscoe/boreddocs-starter/generate">Get started — create your site</a>
+  </p>
+  <p class="hero-meta">You'll be asked to log in to GitHub if you aren't already.</p>
 </section>
 {% endblock %}
