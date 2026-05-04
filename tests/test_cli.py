@@ -27,6 +27,27 @@ def test_cli_build(tmp_path):
     assert (work / "_site" / "index.html").exists()
 
 
+def test_cli_build_base_url_flag_overrides_config(tmp_path):
+    work = tmp_path / "sample-district"
+    shutil.copytree(SAMPLE, work)
+    proc = _run(["build", "--base-url", "/my-repo"], work)
+    assert proc.returncode == 0, proc.stderr
+    home = (work / "_site" / "index.html").read_text()
+    assert 'href="/my-repo/static/styles.css"' in home
+
+
+def test_cli_build_site_url_flag_lands_in_sitemap(tmp_path):
+    work = tmp_path / "sample-district"
+    shutil.copytree(SAMPLE, work)
+    proc = _run(
+        ["build", "--base-url", "/my-repo", "--site-url", "https://wroscoe.github.io"],
+        work,
+    )
+    assert proc.returncode == 0, proc.stderr
+    sitemap = (work / "_site" / "sitemap.xml").read_text()
+    assert "<loc>https://wroscoe.github.io/my-repo/</loc>" in sitemap
+
+
 def test_cli_check_passes_on_sample(tmp_path):
     work = tmp_path / "sample-district"
     shutil.copytree(SAMPLE, work)

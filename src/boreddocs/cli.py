@@ -22,6 +22,10 @@ def _add_config_arg(p: argparse.ArgumentParser) -> None:
 
 def cmd_build(args: argparse.Namespace) -> int:
     cfg = load_config(args.config)
+    if args.base_url is not None:
+        cfg.site["base_url"] = args.base_url
+    if args.site_url is not None:
+        cfg.site["url"] = args.site_url
     counts = Builder(cfg).build()
     print(
         f"Built {counts['meetings']} meetings, {counts['policies']} policies → {cfg.output_path}"
@@ -89,6 +93,16 @@ def main(argv: list[str] | None = None) -> int:
 
     p_build = sub.add_parser("build", help="Render the site to _site/.")
     _add_config_arg(p_build)
+    p_build.add_argument(
+        "--base-url",
+        default=None,
+        help="Override site.base_url from config (e.g. /<repo> for GitHub Pages project sites).",
+    )
+    p_build.add_argument(
+        "--site-url",
+        default=None,
+        help="Override site.url from config (canonical origin used in sitemap.xml).",
+    )
     p_build.set_defaults(func=cmd_build)
 
     p_serve = sub.add_parser("serve", help="Build and serve with auto-rebuild.")

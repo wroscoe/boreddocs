@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.4] - 2026-05-04
+
+### Added
+- **`boreddocs build --base-url <path>`** flag to override `site.base_url`
+  from config. Lets the deploy workflow auto-derive the subpath
+  (e.g. `/repo-name`) from `actions/configure-pages` outputs, so users
+  don't have to set `base_url` manually for GitHub Pages project sites.
+- **`boreddocs build --site-url <url>`** flag to override `site.url`,
+  similarly useful for setting the canonical origin in CI.
+
 ## [0.1.3] - 2026-05-03
 
 ### Added
