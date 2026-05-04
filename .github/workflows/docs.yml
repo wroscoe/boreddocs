@@ -37,6 +37,9 @@ jobs:
       - working-directory: docs
         run: boreddocs build
 
+      # Custom domain: GH Pages requires a CNAME file at the site root.
+      - run: cp docs/CNAME docs/_site/CNAME
+
       - uses: actions/upload-pages-artifact@v3
         with:
           path: docs/_site
