@@ -1,4 +1,4 @@
-__version__ = "0.1.2"
+__version__ = "0.1.3"
 
 from boreddocs.builder import Builder
 from boreddocs.config import Config, load_config

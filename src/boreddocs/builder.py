@@ -60,8 +60,13 @@ class Builder:
             "source_path": None,
         }
 
+        # Track URLs as we emit pages, for sitemap.xml.
+        # Tuples of (path, priority).
+        urls: list[tuple[str, str]] = []
+
         # Home
         (out / "index.html").write_text(env.get_template("home.html").render(**base_ctx))
+        urls.append(("/", "1.0"))
 
         # Meetings
         meeting_tpl = env.get_template("meeting.html")
@@ -70,12 +75,15 @@ class Builder:
             d.mkdir(parents=True, exist_ok=True)
             ctx = {**base_ctx, "source_path": m.get("source_path")}
             (d / "index.html").write_text(meeting_tpl.render(meeting=m, **ctx))
+            urls.append((f"/meetings/{m['slug']}/", "0.7"))
 
         listing_tpl = env.get_template("meetings_listing.html")
         (out / "meetings").mkdir(exist_ok=True)
         (out / "meetings" / "index.html").write_text(
             listing_tpl.render(meetings=meetings, **base_ctx)
         )
+        if meetings:
+            urls.append(("/meetings/", "0.8"))
 
         # Policies
         policy_tpl = env.get_template("policy.html")
@@ -84,6 +92,7 @@ class Builder:
             d.mkdir(parents=True, exist_ok=True)
             ctx = {**base_ctx, "source_path": p.get("source_path")}
             (d / "index.html").write_text(policy_tpl.render(policy=p, **ctx))
+            urls.append((f"/policies/{p['code']}/", "0.7"))
 
         pol_listing_tpl = env.get_template("policies_listing.html")
         categories = data.get("policy_categories", {}).get("categories", [])
@@ -91,10 +100,49 @@ class Builder:
         (out / "policies" / "index.html").write_text(
             pol_listing_tpl.render(policies=policies, categories=categories, **base_ctx)
         )
+        if policies:
+            urls.append(("/policies/", "0.8"))
 
         self._copy_static(out)
+        self._write_sitemap(out, urls)
+        self._write_robots(out)
 
         return {"meetings": len(meetings), "policies": len(policies)}
+
+    def _site_url(self) -> str | None:
+        """Canonical absolute origin (e.g. https://www.example.com).
+
+        Used for sitemap <loc> entries which must be absolute URLs per the
+        sitemap spec. If unset, sitemap entries fall back to relative paths
+        (less useful but still valid against modern crawlers).
+        """
+        url = self.config.site.get("url") or ""
+        url = str(url).strip().rstrip("/")
+        return url or None
+
+    def _write_sitemap(self, out: Path, urls: list[tuple[str, str]]) -> None:
+        site_url = self._site_url()
+        base = (str(self.config.site.get("base_url") or "")).rstrip("/")
+        from xml.sax.saxutils import escape as xml_escape
+
+        lines = ['<?xml version="1.0" encoding="UTF-8"?>']
+        lines.append('<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">')
+        for path, priority in urls:
+            full = (site_url or "") + base + path if site_url else base + path
+            lines.append("  <url>")
+            lines.append(f"    <loc>{xml_escape(full)}</loc>")
+            lines.append(f"    <priority>{priority}</priority>")
+            lines.append("  </url>")
+        lines.append("</urlset>")
+        (out / "sitemap.xml").write_text("\n".join(lines) + "\n")
+
+    def _write_robots(self, out: Path) -> None:
+        site_url = self._site_url()
+        base = (str(self.config.site.get("base_url") or "")).rstrip("/")
+        sitemap = (site_url or "") + base + "/sitemap.xml" if site_url else base + "/sitemap.xml"
+        (out / "robots.txt").write_text(
+            "User-agent: *\nAllow: /\n\nSitemap: " + sitemap + "\n"
+        )
 
     # ---------- helpers ----------
 

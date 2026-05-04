@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.3] - 2026-05-03
+
+### Added
+- **`sitemap.xml` and `robots.txt`** are emitted automatically alongside
+  every build. The sitemap lists the home page, both listings, and every
+  meeting and policy page. Set `site.url` in `boreddocs.yml` (e.g.
+  `https://www.example.org`) to get absolute URLs in the sitemap; without
+  it, paths are emitted relative.
+
 ## [0.1.2] - 2026-05-03
 
 ### Added

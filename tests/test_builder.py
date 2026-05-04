@@ -148,6 +148,61 @@ def test_listing_pages_show_repo_link_only(tmp_path):
     assert "Edit this page on GitHub" not in listing
 
 
+def test_sitemap_and_robots_emitted_with_absolute_urls(tmp_path):
+    work = tmp_path / "sample-district"
+    shutil.copytree(SAMPLE, work)
+    config_path = work / "boreddocs.yml"
+    config_path.write_text(
+        config_path.read_text().replace(
+            'base_url: ""',
+            'base_url: ""\n  url: https://www.example.org',
+        )
+    )
+    cfg = load_config(config_path)
+    Builder(cfg).build()
+
+    sitemap = (work / "_site" / "sitemap.xml").read_text()
+    assert "<?xml version=" in sitemap
+    assert "<loc>https://www.example.org/</loc>" in sitemap
+    assert "<loc>https://www.example.org/meetings/</loc>" in sitemap
+    assert "<loc>https://www.example.org/meetings/2025-09-10-regular/</loc>" in sitemap
+    assert "<loc>https://www.example.org/policies/AA/</loc>" in sitemap
+
+    robots = (work / "_site" / "robots.txt").read_text()
+    assert "User-agent: *" in robots
+    assert "Sitemap: https://www.example.org/sitemap.xml" in robots
+
+
+def test_sitemap_respects_base_url_subpath(tmp_path):
+    work = tmp_path / "sample-district"
+    shutil.copytree(SAMPLE, work)
+    config_path = work / "boreddocs.yml"
+    config_path.write_text(
+        config_path.read_text().replace(
+            'base_url: ""',
+            'base_url: /my-repo\n  url: https://wroscoe.github.io',
+        )
+    )
+    cfg = load_config(config_path)
+    Builder(cfg).build()
+
+    sitemap = (work / "_site" / "sitemap.xml").read_text()
+    assert "<loc>https://wroscoe.github.io/my-repo/</loc>" in sitemap
+    assert "<loc>https://wroscoe.github.io/my-repo/meetings/</loc>" in sitemap
+
+
+def test_sitemap_falls_back_when_url_unset(tmp_path):
+    work = tmp_path / "sample-district"
+    shutil.copytree(SAMPLE, work)
+    cfg = load_config(work / "boreddocs.yml")
+    Builder(cfg).build()
+
+    sitemap = (work / "_site" / "sitemap.xml").read_text()
+    # No site.url set -> relative paths only.
+    assert "<loc>/</loc>" in sitemap
+    assert "https://" not in sitemap
+
+
 def test_overrides_static_overlays_theme_static(tmp_path):
     work = tmp_path / "sample-district"
     shutil.copytree(SAMPLE, work)

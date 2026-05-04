@@ -3,6 +3,7 @@ schema_version: 1
 site:
   name: boreddocs
   short_name: boreddocs
+  url: https://www.boreddocs.com
   base_url: ""
   description: "Free, SEO- and AI-friendly static site for school board documents — agendas, minutes, and policies authored in Markdown. Like mkdocs, for school boards."
   repo_url: https://github.com/wroscoe/boreddocs
