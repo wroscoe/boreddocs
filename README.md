@@ -1,10 +1,10 @@
-# boreddocs
+# Bored Docs
 
-**Project site: [www.boreddocs.com](https://www.boreddocs.com)**
+**Project site: [www.boreddocs.com](https://www.boreddocs.com)** · install: `pip install boreddocs`
 
 A free, fast, SEO- and AI-friendly static site for school board documents — agendas, minutes, and policies authored in Markdown. Modeled after [`mkdocs`](https://www.mkdocs.org/), but specialized for the way school boards actually publish information.
 
-`boreddocs` exists because the dominant paid board-portal product is expensive, hostile to search engines, and unfriendly to AI assistants. School board agendas are public records — they should look, feel, and read like the open web.
+**Bored Docs** exists because the dominant paid board-portal product is expensive, hostile to search engines, and unfriendly to AI assistants. School board agendas are public records — they should look, feel, and read like the open web.
 
 ## Quickstart
 
@@ -39,6 +39,8 @@ my-district/
 A complete working example lives at [`examples/sample-district/`](./examples/sample-district/).
 
 ## What `boreddocs build` does
+
+(The package and CLI are spelled `boreddocs`, one word; the project name in prose is **Bored Docs**.)
 
 1. Reads `boreddocs.yml` and validates it.
 2. Walks `content/meetings/*.md` and `content/policies/*.md`. Each file has YAML frontmatter (metadata) followed by Markdown body.

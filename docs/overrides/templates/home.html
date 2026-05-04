@@ -1,10 +1,10 @@
 {% extends "base.html" %}
-{% block title %}boreddocs — open static-site renderer for school board documents{% endblock %}
+{% block title %}Bored Docs — open static-site renderer for school board documents{% endblock %}
 {% block description %}Free, SEO- and AI-friendly static site generator for school board agendas, minutes, and policies. Markdown in, GitHub Pages out.{% endblock %}
 
 {% block content %}
 <section class="hero">
-  <h1>boreddocs</h1>
+  <h1>Bored Docs</h1>
   <p class="lede">Free, SEO- and AI-friendly static site for school board documents — agendas, minutes, and policies authored in Markdown. Like <a href="https://www.mkdocs.org/">mkdocs</a>, but specialized for the way school boards actually publish information.</p>
   <p class="cta-row">
     <a class="btn" href="{{ site.repo_url }}">View on GitHub</a>
@@ -14,7 +14,7 @@
 
 <section id="what">
   <h2>What is this?</h2>
-  <p>School board agendas, minutes, and policies are public records — but most districts publish them through paid portals that are expensive, hostile to search engines, and unfriendly to AI assistants. <strong>boreddocs</strong> is the free, open-source replacement: each district authors its content in Markdown in a GitHub repository, and <code>boreddocs build</code> renders a fully pre-rendered static site that can be hosted on GitHub Pages for $0.</p>
+  <p>School board agendas, minutes, and policies are public records — but most districts publish them through paid portals that are expensive, hostile to search engines, and unfriendly to AI assistants. <strong>Bored Docs</strong> is the free, open-source replacement: each district authors its content in Markdown in a GitHub repository, and <code>boreddocs build</code> renders a fully pre-rendered static site that can be hosted on GitHub Pages for $0.</p>
   <p>Editor mental model: a district's repo is just Markdown + one config file. No Python, no templates, no frameworks. <code>pip install boreddocs</code> takes care of the rest.</p>
 </section>
 
@@ -42,7 +42,7 @@ boreddocs build              # → _site/, ready for GitHub Pages</code></pre>
 
 <section id="example">
   <h2>Live example</h2>
-  <p><a href="https://wroscoe.github.io/tcsd_board_doc_viewer/">Teton County School District #1</a> — TCSD's full board-doc site, including agendas, minutes with motion blocks, and the Board Policy Manual. Their entire repository is <a href="https://github.com/wroscoe/tcsd_board_doc_viewer">~14 files</a>: a config, the Markdown content, and a 30-line GitHub Actions workflow. Everything else lives in <code>boreddocs</code>.</p>
+  <p><a href="https://wroscoe.github.io/tcsd_board_doc_viewer/">Teton County School District #1</a> — TCSD's full board-doc site, including agendas, minutes with motion blocks, and the Board Policy Manual. Their entire repository is <a href="https://github.com/wroscoe/tcsd_board_doc_viewer">~14 files</a>: a config, the Markdown content, and a 30-line GitHub Actions workflow. Everything else lives in the <code>boreddocs</code> package.</p>
 </section>
 
 <section id="status">

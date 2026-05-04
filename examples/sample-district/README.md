@@ -1,6 +1,6 @@
 # Sample School District — Board Documents
 
-Public agendas, minutes, and policies for the Sample School District. Built with [boreddocs](https://github.com/wroscoe/boreddocs).
+Public agendas, minutes, and policies for the Sample School District. Built with [Bored Docs](https://www.boreddocs.com).
 
 ## For board staff (editors)
 

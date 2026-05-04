@@ -1,6 +1,6 @@
 # Editor Guide
 
-This site is built with [boreddocs](https://github.com/wroscoe/boreddocs) — all content is plain text Markdown stored on GitHub. No special software required to edit.
+This site is built with [Bored Docs](https://www.boreddocs.com) — all content is plain text Markdown stored on GitHub. No special software required to edit.
 
 ## What you'll need
 
