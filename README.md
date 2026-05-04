@@ -1,5 +1,7 @@
 # boreddocs
 
+**Project site: [www.boreddocs.com](https://www.boreddocs.com)**
+
 A free, fast, SEO- and AI-friendly static site for school board documents — agendas, minutes, and policies authored in Markdown. Modeled after [`mkdocs`](https://www.mkdocs.org/), but specialized for the way school boards actually publish information.
 
 `boreddocs` exists because the dominant paid board-portal product is expensive, hostile to search engines, and unfriendly to AI assistants. School board agendas are public records — they should look, feel, and read like the open web.
